@@ -6,55 +6,173 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 07:31:16 by ogoman            #+#    #+#             */
-/*   Updated: 2023/11/27 15:49:37 by ogoman           ###   ########.fr       */
+/*   Updated: 2023/11/28 15:30:21 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*join_str(void *dest, void const *source, size_t dest_l, size_t src_l)
+// Looks for a newline character in buffer starting from start_index.
+// Returns the index of the character folowing the newline.
+// Returns 0 is no newline was found.
+ssize_t	find_newline(char *buf, ssize_t start_index)
 {
-	char	*res_str;
-
-	res_str = (char *)malloc((dest_l + src_l + 1) * sizeof(char));
-	if (res_str != NULL)
+	while (buf[start_index])
 	{
-		custom_memcpy(res_str, dest, dest_l);
-		custom_memcpy(res_str + dest_l, source, src_l);
-		res_str[dest_l + src_l] = '\0';
+		if (buf[start_index] == '\n')
+			return (start_index + 1);
+		start_index++;
 	}
-	free(dest);
-	return (res_str);
+	return (0);
 }
 
-void	*custom_memchr(const void *buffer, void *start, int targ, size_t size)
+// Returns the length of the string s
+ssize_t	ft_strlen(const char *s)
 {
-	size_t	index;
+	ssize_t	res;
 
-	index = 0;
-	while (index < size)
-	{
-		if (((unsigned char *)buffer)[index] == (unsigned char)targ)
-			return ((void *)buffer + index);
-		index++;
-	}
-	return (start);
+	res = 0;
+	while (s[res])
+		res++;
+	return (res);
 }
 
-void	*custom_memcpy(void *destination, const void *source, size_t num_bytes)
+// Initialises res as an empty string.
+// In case of success returns 1.
+// In case of error (malloc fail) returns 0.
+int	init_res(char **res)
 {
-	size_t	index;
-
-	index = 0;
-	if (destination == NULL && source == NULL)
-		return (NULL);
-	while (index < num_bytes)
-	{
-		((char *)destination)[index] = ((char *)source)[index];
-		index++;
-	}
-	return (destination);
+	*res = (char *)malloc(sizeof(char) * 1);
+	if (!*res)
+		return (0);
+	(*res)[0] = '\0';
+	return (1);
 }
+
+// size_t	ft_strlen(const char *str)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }
+
+// char	*ft_strcpy(char *dest, char *src)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (src[i])
+// 	{
+// 		dest[i] = src[i];
+// 		i++;
+// 	}
+// 	dest[i] = src[i];
+// 	return (dest);
+// }
+
+// char	*ft_strcat(char *dest, char *src)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = ft_strlen(dest);
+// 	j = 0;
+// 	while (src[j])
+// 	{
+// 		dest[i + j] = src[j];
+// 		j++;
+// 	}
+// 	dest[i + j] = '\0';
+// 	return (dest);
+// }
+
+// char	*ft_strjoin(char *s1, char *s2)
+// {
+// 	char	*res;
+
+// 	if (!s1)
+// 	{
+// 		s1 = (char *)malloc(sizeof(char) * 1);
+// 		s1[0] = '\0';
+// 	}
+// 	if (!s1 || !s2)
+// 		return (NULL);
+// 	res = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
+// 	if (res == NULL)
+// 		return (NULL);
+// 	ft_strcpy(res, s1);
+// 	ft_strcat(res, s2);
+// 	free(s1);
+// 	return (res);
+// }
+
+// char	*ft_strchr(const char *s, int c)
+// {
+// 	unsigned int	i;
+// 	char			*str;
+
+// 	i = 0;
+// 	str = (char *)s;
+// 	if (!s)
+// 		return (0);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == (char)c)
+// 			return (&str[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+/////////////////////////////////////
+
+// char	*join_str(void *dest, void const *source, size_t dest_l, size_t src_l)
+// {
+// 	char	*res_str;
+
+// 	res_str = (char *)malloc((dest_l + src_l + 1) * sizeof(char));
+// 	if (res_str != NULL)
+// 	{
+// 		custom_memcpy(res_str, dest, dest_l);
+// 		custom_memcpy(res_str + dest_l, source, src_l);
+// 		res_str[dest_l + src_l] = '\0';
+// 	}
+// 	free(dest);
+// 	return (res_str);
+// }
+
+// void	*custom_memchr(const void *buffer, void *start, int targ, size_t size)
+// {
+// 	size_t	index;
+
+// 	index = 0;
+// 	while (index < size)
+// 	{
+// 		if (((unsigned char *)buffer)[index] == (unsigned char)targ)
+// 			return ((void *)buffer + index);
+// 		index++;
+// 	}
+// 	return (start);
+// }
+
+// void	*custom_memcpy(void *destination, const void *source, size_t num_bytes)
+// {
+// 	size_t	index;
+
+// 	index = 0;
+// 	if (destination == NULL && source == NULL)
+// 		return (NULL);
+// 	while (index < num_bytes)
+// 	{
+// 		((char *)destination)[index] = ((char *)source)[index];
+// 		index++;
+// 	}
+// 	return (destination);
+// }
+/////////////////////////////////////////////////
 
 // char	*ft_strjoin(char *s1, char *s2)
 // {
