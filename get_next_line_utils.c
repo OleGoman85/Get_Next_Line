@@ -6,7 +6,7 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 07:31:16 by ogoman            #+#    #+#             */
-/*   Updated: 2023/11/28 15:30:21 by ogoman           ###   ########.fr       */
+/*   Updated: 2023/11/29 15:16:32 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 // Looks for a newline character in buffer starting from start_index.
 // Returns the index of the character folowing the newline.
 // Returns 0 is no newline was found.
-ssize_t	find_newline(char *buf, ssize_t start_index)
+ssize_t	find_new_string(char *buffer, ssize_t start_index)
 {
-	while (buf[start_index])
+	while (buffer[start_index])
 	{
-		if (buf[start_index] == '\n')
+		if (buffer[start_index] == '\n')
 			return (start_index + 1);
 		start_index++;
 	}
@@ -37,17 +37,14 @@ ssize_t	ft_strlen(const char *s)
 	return (res);
 }
 
-// Initialises res as an empty string.
-// In case of success returns 1.
-// In case of error (malloc fail) returns 0.
-int	init_res(char **res)
-{
-	*res = (char *)malloc(sizeof(char) * 1);
-	if (!*res)
-		return (0);
-	(*res)[0] = '\0';
-	return (1);
-}
+// int	init_res(char **result)
+// {
+// 	*result = (char *)malloc(sizeof(char) * 1);
+// 	if (!*result)
+// 		return (0);
+// 	(*result)[0] = '\0';
+// 	return (1);
+// }
 
 // size_t	ft_strlen(const char *str)
 // {
